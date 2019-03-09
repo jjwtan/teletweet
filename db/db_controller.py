@@ -12,7 +12,6 @@ class DbController(object):
 
     def get_tweet_of_id(self, conn, id):
         sql = "SELECT count(*) FROM tweets WHERE id=%s" % id
-        print(sql)
         query = conn.execute(sql)
         return query.first()[0]
         
