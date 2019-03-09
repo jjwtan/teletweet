@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, jsonify, request
 from sqlalchemy import create_engine
 from db_controller import DbController
@@ -51,5 +52,8 @@ def create_app():
 
 
 if __name__ == '__main__':
+    logger = logging.getLogger(__name__)
+    logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename='db-service.log',level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
+
     app = create_app()
-    app.run(port=5001)
+    app.run(port=5001, host='0.0.0.0')  #set host to allow external access

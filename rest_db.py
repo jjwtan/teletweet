@@ -9,19 +9,15 @@ def check_exist(tweet_id):
         return json.loads(response.text)
 
 def persist_tweet(tweet):
-    origial_tweet = tweet
-    if "retweeted_status" in tweet: # capture the original tweet informtion instead of retweeter
-        origial_tweet = tweet["retweeted_status"]
-
     data = {}
-    media = origial_tweet["entities"]["media"][0]
+    media = tweet["entities"]["media"][0]
 
     data["id"] =  media["id"]
     data["url"] = media["expanded_url"]
-    data["date"] = origial_tweet["created_at"]
-    data["user_id"] = origial_tweet["user"]["id"]
-    data["name"] = origial_tweet["user"]["screen_name"]
-    data["count"] = origial_tweet["user"]["followers_count"]
+    data["date"] = tweet["created_at"]
+    data["user_id"] = tweet["user"]["id"]
+    data["name"] = tweet["user"]["screen_name"]
+    data["count"] = tweet["user"]["followers_count"]
 
     print(data)
     requests.post(url = add_url, data = data)
