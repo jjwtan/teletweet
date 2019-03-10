@@ -1,4 +1,8 @@
-NAME=1
+import logging
+from db_config import *
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename='db-service.log',level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
 def get_tweet_data(request):
     return (
@@ -15,14 +19,19 @@ def get_user_data(request):
         int(request.values["count"])
     )
 
-def util_screen_tweet(conn, db_controller, tweet_data, user_data):
+def util_screen_tweet(conn, db_controller, request):
     backlist_result = db_controller.get_blacklist(conn)
-    print("blackList retreived")
+
     blacklist = {(row["screen_name"]) for row in backlist_result}
-    print(str(blacklist))
-    print(user_data)
-    if user_data[NAME] in blacklist:
-        print("returning false")
+
+    if request.values["name"] in blacklist:
+        logger.info("restricted user @%s" % request.values["name"])
         return False
+
+    for word in RESTRICTED_WORDS:
+        if word in request.values["text"]:
+            logger.info('restricted word "%s"' % word)
+            return False
+        
     print("returning true")    
     return True

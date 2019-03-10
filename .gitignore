@@ -116,3 +116,4 @@ dmypy.json
 
 # tokens
 tokens.py
+db/db_config.py

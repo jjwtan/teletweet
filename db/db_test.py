@@ -8,12 +8,13 @@ data={
     'url':'xyz',
     'date':'20190309',
     'user_id':1351,
-    'name':'sxxx',
-    'count':10
+    'name':'sxkxx',
+    'count':10,
+    'text':'what the fuck wow'
 }
 
 # print(requests.post(url = url, data = data))
 
-# print(requests.get("http://127.0.0.1:5001/getAllTweets"))
+print(requests.get("http://127.0.0.1:5001/getAllTweets"))
 
-print(requests.post(url = screen_url, data = data).content)
+# print(requests.post(url = screen_url, data = data).content)

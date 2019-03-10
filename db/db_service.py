@@ -33,9 +33,7 @@ def create_app():
     def screen_tweet():
         conn = engine.connect()
         try:
-            tweet_data = get_tweet_data(request)
-            user_data = get_user_data(request)
-            return jsonify(util_screen_tweet(conn, db_controller, tweet_data, user_data))
+            return jsonify(util_screen_tweet(conn, db_controller, request))
         except Exception as e:
             print("oh no " + str(e))
         return "200"
@@ -61,8 +59,8 @@ def create_app():
 
 
 if __name__ == '__main__':
-    # logger = logging.getLogger(__name__)
-    # logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename='db-service.log',level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
+    logger = logging.getLogger(__name__)
+    logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename='db-service.log',level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
     app = create_app()
     app.run(port=5001, host='0.0.0.0')  #set host to allow external access
