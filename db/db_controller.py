@@ -15,13 +15,22 @@ class DbController(object):
         query = conn.execute(sql)
         return query.first()[0]
         
-    
+    def get_all_tweets(self, conn):
+        sql = "SELECT tweets.id, expanded_url, created_at, user_id, screen_name, follower_count FROM tweets JOIN users ON tweets.user_id = users.id ORDER BY tweets.id ASC"
+        results = conn.execute(sql)
+        return results.fetchall()
+
     def add_tweet(self, conn, tweet_data, user_data):
         tweet_sql = "INSERT INTO tweets VALUES (?,?,?,?)"
         user_sql = "INSERT INTO users VALUES (?,?,?)"
 
         conn.execute(tweet_sql, tweet_data)
         conn.execute(user_sql, user_data)
+
+    def get_blacklist(self, conn):
+        sql = "SELECT * FROM blacklist"
+        results = conn.execute(sql)
+        return results.fetchall()
 
 
 

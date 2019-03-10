@@ -26,3 +26,12 @@ def init_tables(conn):
             follower_count INTEGER
         )'''
     )
+
+    create_table(
+        conn, 
+        '''CREATE TABLE IF NOT EXISTS blacklist (
+            id INTEGER PRIMARY KEY, 
+            screen_name TEXT
+        )'''
+    )
+
