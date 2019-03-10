@@ -32,6 +32,14 @@ class DbController(object):
         results = conn.execute(sql)
         return results.fetchall()
 
+    def add_blacklist_user(self, conn, user):
+        sql = "INSERT INTO blacklist VALUES ((SELECT id FROM users WHERE screen_name = '%s'),'%s')" % (user, user)
+        conn.execute(sql)
+
+    def delete_blacklist_user(self, conn, user):
+        sql = "DELETE FROM blacklist WHERE screen_name = '%s'" % user
+        conn.execute(sql)
+
 
 
     

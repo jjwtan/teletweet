@@ -49,6 +49,36 @@ def create_app():
             print("oh no " + str(e))
         return "200"
 
+    @app.route('/getBlackList', methods=['GET'])
+    def get_all_blacklisted():
+        try:
+            conn = engine.connect()
+            result = db_controller.get_blacklist(conn)
+            return jsonify({'blacklist': [dict(row) for row in result]})
+        except Exception as e:
+            print("oh no " + str(e))
+        return "200"
+
+    @app.route('/blackListUser/<user>', methods=['GET'])
+    def blacklist_user(user):
+        try:
+            conn = engine.connect()
+            db_controller.add_blacklist_user(conn, user)
+            return "succesfully blacklisted %s" % user
+        except Exception as e:
+            print("oh no " + str(e))
+            return "fail to blacklist %s" % user
+        
+
+    @app.route('/removeBlackListUser/<user>', methods=['GET'])
+    def remove_blacklist_user(user):
+        try:
+            conn = engine.connect()
+            db_controller.delete_blacklist_user(conn, user)
+            return "%s is removed from blacklist" % user
+        except Exception as e:
+            print("oh no " + str(e))
+            return "fail to remove %s from blacklist" % user
 
 
     @app.route('/check', methods=['GET'])
