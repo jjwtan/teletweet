@@ -3,7 +3,7 @@ import json
 import pickle
 import logging
 from tele_ch_send import send_mess, send_review
-from rest_db import check_exist, persist_tweet
+from rest_db import check_exist, persist_tweet, screen_tweet
 from tokens import *
 
 logger = logging.getLogger(__name__)
@@ -35,9 +35,9 @@ class MyStreamListener(tweepy.StreamListener):
                 url = media["expanded_url"]
 
                 if check_exist(tweet_id):
-                    pass    # alread processed tweet
+                    pass    # already processed tweet
                 else:
-                    if follower_count > 600 and original_follower_count > 500:
+                    if follower_count > 600 and original_follower_count > 500 and screen_tweet(original_tweet):
                         logger.info("sent %s > %s" % (url, send_mess(url)))
                         persist_tweet(original_tweet)
                     else:
