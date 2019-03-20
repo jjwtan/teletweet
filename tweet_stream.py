@@ -11,6 +11,6 @@ try:
     api = tweepy.API(auth)
     myStreamListener = MyStreamListener()
     myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener, tweet_mode='extended')
-    myStream.filter(track=TRACKERS)
+    myStream.filter(track=TRACKERS, stall_warnings=True)
 except Exception as e:
     logging.error(str(e))
