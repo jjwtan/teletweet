@@ -3,7 +3,6 @@ import requests
 import sys
 
 def get_stats(url):
-    print("getting requests")
     if "twitter" not in url:    # if not twitter link
         return ("1000","1000")
     try:

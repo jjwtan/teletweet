@@ -16,9 +16,9 @@ def screen_tweets(bot, msg_id, chat_id, url):
     likes = int(stats[1])
 
     if retweets < 1 or likes < 2:
-        logging.info("did not fulfil requirement: {}/{}".format(retweets, likes))
+        logging.info("{} did not fulfil requirement: {}/{}".format(url, retweets, likes))
         try:
-            send_review("{}/{} \n : {}".format(retweets, likes, url))
+            send_review("{}/{} : \n{}".format(retweets, likes, url))
             response = bot.delete_message(chat_id=chat_id, message_id=msg_id)
         except Exception as e:
             print("response: {}".format(e))
@@ -54,7 +54,7 @@ def main():
     dp.add_handler(command_handler)
     dp.add_handler(text_handler)
 
-    print("start polling")
+    logging.info("start polling")
     updater.start_polling()
     updater.idle()
 
